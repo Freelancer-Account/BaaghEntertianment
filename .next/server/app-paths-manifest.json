@@ -1,0 +1,23 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/about/page": "app/about/page.js",
+  "/admin/blog/[id]/edit/page": "app/admin/blog/[id]/edit/page.js",
+  "/admin/blog/new/page": "app/admin/blog/new/page.js",
+  "/admin/blog/page": "app/admin/blog/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/admin/portfolio/[id]/edit/page": "app/admin/portfolio/[id]/edit/page.js",
+  "/admin/portfolio/new/page": "app/admin/portfolio/new/page.js",
+  "/admin/portfolio/page": "app/admin/portfolio/page.js",
+  "/admin/services/[id]/edit/page": "app/admin/services/[id]/edit/page.js",
+  "/admin/services/new/page": "app/admin/services/new/page.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/api/contact/route": "app/api/contact/route.js",
+  "/blog/page": "app/blog/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/login/page": "app/login/page.js",
+  "/page": "app/page.js",
+  "/portfolio/page": "app/portfolio/page.js",
+  "/services/page": "app/services/page.js"
+}

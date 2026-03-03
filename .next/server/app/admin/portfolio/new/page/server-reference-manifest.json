@@ -1,0 +1,20 @@
+{
+  "node": {
+    "40021f39ca2a3861fa2b9bc18b8d00240713db0a68": {
+      "workers": {
+        "app/admin/portfolio/new/page": {
+          "moduleId": 88104,
+          "async": false,
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "src/app/admin/portfolio/new/page.tsx"
+        }
+      },
+      "layer": {
+        "app/admin/portfolio/new/page": "rsc"
+      },
+      "exportedName": "$$RSC_SERVER_ACTION_0",
+      "filename": "src/app/admin/portfolio/new/page.tsx"
+    }
+  },
+  "edge": {}
+}
