@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
 
 export default async function AdminPortfolio() {
     const projects = await prisma.project.findMany({

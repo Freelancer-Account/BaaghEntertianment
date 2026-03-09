@@ -1,10 +1,12 @@
-import { getServerSession } from 'next-auth/next';
+import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import { authOptions } from '@/lib/auth';
 import { createService } from '@/lib/adminActions';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
+
 export default async function NewService() {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session || (session.user as any)?.role !== 'ADMIN') redirect('/login');
 
     const handleAction = async (formData: FormData) => {

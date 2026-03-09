@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/auth';
 import { AdminAddButton, AdminItemControls } from '@/components/AdminControls';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
 
 export default async function Portfolio() {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     const isAdmin = (session?.user as any)?.role === 'ADMIN';
     const dbProjects = await prisma.project.findMany({
         orderBy: { createdAt: 'desc' }
@@ -31,7 +31,7 @@ export default async function Portfolio() {
                 <AdminAddButton isAdmin={isAdmin} href="/admin/portfolio/new" label="New Project" />
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
-                    {projects.map((proj) => (
+                    {projects.map((proj: any) => (
                         <div key={proj.id} className="portfolio-card" style={{ position: 'relative', overflow: 'hidden', borderRadius: '4px', cursor: 'pointer' }}>
                             <AdminItemControls isAdmin={isAdmin} id={proj.id} type="project" />
                             <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '300px', objectFit: 'cover', display: 'block', transition: 'transform 0.5s ease' }} className="portfolio-img" />

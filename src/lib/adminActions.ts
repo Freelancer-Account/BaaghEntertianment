@@ -2,11 +2,10 @@
 
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/auth';
 
 async function checkAdmin() {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session || (session.user as any)?.role !== 'ADMIN') {
         throw new Error('Unauthorized');
     }

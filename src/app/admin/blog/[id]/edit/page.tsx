@@ -1,13 +1,13 @@
-import { getServerSession } from 'next-auth/next';
+import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { updatePost } from '@/lib/adminActions';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
 
 export default async function EditPost({ params }: { params: { id: string } }) {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session || (session.user as any)?.role !== 'ADMIN') redirect('/login');
 
     const post = await prisma.post.findUnique({

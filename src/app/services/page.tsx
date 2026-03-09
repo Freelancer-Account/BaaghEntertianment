@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/auth';
 import { AdminAddButton, AdminItemControls } from '@/components/AdminControls';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
 
 export default async function Services() {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     const isAdmin = (session?.user as any)?.role === 'ADMIN';
 
     const allServices = await prisma.service.findMany({
@@ -23,7 +23,7 @@ export default async function Services() {
                 <AdminAddButton isAdmin={isAdmin} href="/admin/services/new" label="New Service" />
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2.5rem', maxWidth: '1200px', margin: '0 auto', textAlign: 'left' }}>
-                    {allServices.map((srv) => (
+                    {allServices.map((srv: any) => (
                         <div key={srv.id} style={{ backgroundColor: 'var(--color-black)', padding: '3rem 2rem', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', position: 'relative' }}>
                             <AdminItemControls isAdmin={isAdmin} id={srv.id} type="service" />
                             <h2 style={{ fontSize: '1.8rem', color: 'var(--color-white)', marginBottom: '1rem' }}>{srv.title}</h2>

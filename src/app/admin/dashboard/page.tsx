@@ -1,12 +1,12 @@
-import { getServerSession } from 'next-auth/next';
+import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
 
 export default async function AdminDashboard() {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session || (session.user as any)?.role !== 'ADMIN') redirect('/login');
 
     const postsCount = await prisma.post.count();

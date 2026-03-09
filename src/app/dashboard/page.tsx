@@ -1,9 +1,11 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
+
 export default async function GeneralDashboard() {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     if (!session) {
         redirect('/login');

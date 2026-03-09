@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 
+export const runtime = 'edge';
+
 export default function NewProject() {
     async function createProject(formData: FormData) {
         'use server';

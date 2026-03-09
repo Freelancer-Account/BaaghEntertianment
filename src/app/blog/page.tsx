@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/auth';
 import { AdminAddButton, AdminItemControls } from '@/components/AdminControls';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
 
 export default async function Blog() {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     const isAdmin = (session?.user as any)?.role === 'ADMIN';
     const dbPosts = await prisma.post.findMany({
         where: { published: true },
@@ -22,7 +22,7 @@ export default async function Blog() {
     ];
 
     // Map dbPosts to match staticPosts structure for hybrid approach
-    const formattedDbPosts = dbPosts.map(post => ({
+    const formattedDbPosts = dbPosts.map((post: any) => ({
         id: post.id,
         title: post.title,
         date: post.createdAt.toLocaleDateString(),
@@ -40,7 +40,7 @@ export default async function Blog() {
                 <AdminAddButton isAdmin={isAdmin} href="/admin/blog/new" label="New Post" />
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem', maxWidth: '1200px', margin: '0 auto', textAlign: 'left' }}>
-                    {posts.map((post) => (
+                    {posts.map((post: any) => (
                         <div key={post.id} style={{ backgroundColor: 'var(--color-black)', padding: '2.5rem', borderLeft: '4px solid var(--color-gold)', borderRadius: '4px', position: 'relative' }}>
                             <AdminItemControls isAdmin={isAdmin} id={post.id} type="post" />
                             <p style={{ color: 'var(--color-gray-text)', fontSize: '0.9rem', marginBottom: '1rem' }}>{post.date}</p>
