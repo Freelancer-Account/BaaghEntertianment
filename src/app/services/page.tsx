@@ -4,6 +4,8 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { AdminAddButton, AdminItemControls } from '@/components/AdminControls';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Services() {
     const session = await getServerSession(authOptions);
     const isAdmin = (session?.user as any)?.role === 'ADMIN';
