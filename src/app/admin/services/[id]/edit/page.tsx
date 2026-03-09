@@ -4,7 +4,6 @@ import { prisma } from '@/lib/prisma';
 import { updateService } from '@/lib/adminActions';
 
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
 
 export default async function EditService({ params }: { params: { id: string } }) {
     const session = await auth();

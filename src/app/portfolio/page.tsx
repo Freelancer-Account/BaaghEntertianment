@@ -4,7 +4,6 @@ import { auth } from '@/auth';
 import { AdminAddButton, AdminItemControls } from '@/components/AdminControls';
 
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
 
 export default async function Portfolio() {
     const session = await auth();

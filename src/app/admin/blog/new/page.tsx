@@ -1,7 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 
-export const runtime = 'edge';
 
 export default function NewPost() {
     async function createPost(formData: FormData) {

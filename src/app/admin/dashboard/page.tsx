@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
 
 export default async function AdminDashboard() {
     const session = await auth();

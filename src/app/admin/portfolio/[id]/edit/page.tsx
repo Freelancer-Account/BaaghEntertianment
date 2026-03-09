@@ -4,7 +4,6 @@ import { prisma } from '@/lib/prisma';
 import { updateProject } from '@/lib/adminActions';
 
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
 
 export default async function EditProject({ params }: { params: { id: string } }) {
     const session = await auth();

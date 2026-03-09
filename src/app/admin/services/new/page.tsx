@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation';
 import { createService } from '@/lib/adminActions';
 
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
 
 export default async function NewService() {
     const session = await auth();
