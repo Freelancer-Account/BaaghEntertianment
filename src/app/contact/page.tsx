@@ -29,13 +29,13 @@ export default function Contact() {
     };
 
     return (
-        <div style={{ paddingTop: '100px', minHeight: '100vh', backgroundColor: 'var(--color-black)' }}>
-            <section style={{ padding: '4rem 5%', maxWidth: '1200px', margin: '0 auto' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '4rem' }}>
+        <div className="page-container" style={{ backgroundColor: 'var(--color-black)' }}>
+            <section className="page-section" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                <div className="two-col-grid">
 
-                    <div>
-                        <h1 style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>Get in Touch</h1>
-                        <p style={{ color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '3rem' }}>Let's Discuss Your Next Shoot</p>
+                    <div style={{ textAlign: 'left' }}>
+                        <h1 className="page-title" style={{ textAlign: 'left' }}>Get in Touch</h1>
+                        <p className="page-subtitle" style={{ textAlign: 'left' }}>Let's Discuss Your Next Shoot</p>
                         <p style={{ color: 'var(--color-gray-text)', lineHeight: '1.8', marginBottom: '2rem' }}>
                             Whether you need full line production or specific location permits, our team is ready to assist.
                             Fill out the form and a production coordinator will contact you within 24 hours.
@@ -50,7 +50,7 @@ export default function Contact() {
                         </div>
                     </div>
 
-                    <div style={{ backgroundColor: 'var(--color-charcoal)', padding: '3rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                    <div style={{ backgroundColor: 'var(--color-charcoal)', padding: '2rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
                         {status === 'success' ? (
                             <div style={{ textAlign: 'center', padding: '3rem 0' }}>
                                 <h3 style={{ color: 'var(--color-gold)', marginBottom: '1rem', fontSize: '2rem' }}>Message Sent!</h3>
@@ -59,16 +59,16 @@ export default function Contact() {
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                                <input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} type="text" placeholder="Your Name or Production Company" style={{ width: '100%', padding: '15px', backgroundColor: 'var(--color-black)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '4px' }} />
-                                <input required value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} type="email" placeholder="Email Address" style={{ width: '100%', padding: '15px', backgroundColor: 'var(--color-black)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '4px' }} />
-                                <select value={formData.service} onChange={e => setFormData({ ...formData, service: e.target.value })} style={{ width: '100%', padding: '15px', backgroundColor: 'var(--color-black)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '4px', appearance: 'none' }}>
+                                <input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} type="text" placeholder="Your Name or Production Company" style={{ width: '100%', padding: '15px', backgroundColor: 'var(--color-black)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '4px', fontSize: '1rem' }} />
+                                <input required value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} type="email" placeholder="Email Address" style={{ width: '100%', padding: '15px', backgroundColor: 'var(--color-black)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '4px', fontSize: '1rem' }} />
+                                <select value={formData.service} onChange={e => setFormData({ ...formData, service: e.target.value })} style={{ width: '100%', padding: '15px', backgroundColor: 'var(--color-black)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '4px', appearance: 'none', fontSize: '1rem' }}>
                                     <option value="">Select Service Needed</option>
                                     <option value="Line Production">Line Production</option>
                                     <option value="Locations">Locations & Permits</option>
                                     <option value="Casting">Casting Coordination</option>
                                     <option value="Equipment">Equipment & Logistics</option>
                                 </select>
-                                <textarea required value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} placeholder="Tell us about your project..." rows={5} style={{ width: '100%', padding: '15px', backgroundColor: 'var(--color-black)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '4px', resize: 'vertical' }}></textarea>
+                                <textarea required value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} placeholder="Tell us about your project..." rows={5} style={{ width: '100%', padding: '15px', backgroundColor: 'var(--color-black)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '4px', resize: 'vertical', fontSize: '1rem' }}></textarea>
                                 <button disabled={status === 'loading'} type="submit" className="btn-primary" style={{ width: '100%', padding: '15px', fontSize: '1.1rem', opacity: status === 'loading' ? 0.7 : 1 }}>
                                     {status === 'loading' ? 'Sending...' : 'Send Message'}
                                 </button>

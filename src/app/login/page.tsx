@@ -34,8 +34,8 @@ export default function LoginPage() {
     };
 
     return (
-        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--color-black)', paddingTop: '80px' }}>
-            <div style={{ backgroundColor: 'var(--color-charcoal)', padding: '3rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.05)', width: '100%', maxWidth: '400px' }}>
+        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--color-black)', paddingTop: '80px', padding: '80px 1rem 2rem' }}>
+            <div style={{ backgroundColor: 'var(--color-charcoal)', padding: '3rem 2rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.05)', width: '100%', maxWidth: '400px' }}>
                 <h2 style={{ fontSize: '2rem', marginBottom: '1.5rem', textAlign: 'center' }}>Welcome Back</h2>
                 {error && <p style={{ color: '#ef4444', marginBottom: '1rem', textAlign: 'center' }}>{error}</p>}
 
@@ -47,7 +47,7 @@ export default function LoginPage() {
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            style={{ width: '100%', padding: '12px', backgroundColor: 'var(--color-black)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '4px' }}
+                            style={{ width: '100%', padding: '12px', backgroundColor: 'var(--color-black)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '4px', fontSize: '1rem' }}
                         />
                     </div>
                     <div>
@@ -57,7 +57,7 @@ export default function LoginPage() {
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            style={{ width: '100%', padding: '12px', backgroundColor: 'var(--color-black)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '4px' }}
+                            style={{ width: '100%', padding: '12px', backgroundColor: 'var(--color-black)', border: '1px solid rgba(255, 255, 255, 0.1)', color: 'white', borderRadius: '4px', fontSize: '1rem' }}
                         />
                     </div>
                     <button type="submit" className="btn-primary" style={{ width: '100%', marginTop: '1rem' }}>Sign In</button>

@@ -22,14 +22,14 @@ export default async function Portfolio() {
     const projects = dbProjects.length > 0 ? dbProjects : staticProjects;
 
     return (
-        <div style={{ paddingTop: '100px', minHeight: '100vh', backgroundColor: 'var(--color-black)' }}>
-            <section style={{ padding: '4rem 5%', textAlign: 'center' }}>
-                <h1 style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>Our Portfolio</h1>
-                <p style={{ color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '4rem' }}>Excellence On Screen</p>
+        <div className="page-container" style={{ backgroundColor: 'var(--color-black)' }}>
+            <section className="page-section">
+                <h1 className="page-title">Our Portfolio</h1>
+                <p className="page-subtitle" style={{ marginBottom: '4rem' }}>Excellence On Screen</p>
 
                 <AdminAddButton isAdmin={isAdmin} href="/admin/portfolio/new" label="New Project" />
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
+                <div className="content-grid">
                     {projects.map((proj: any) => (
                         <div key={proj.id} className="portfolio-card" style={{ position: 'relative', overflow: 'hidden', borderRadius: '4px', cursor: 'pointer' }}>
                             <AdminItemControls isAdmin={isAdmin} id={proj.id} type="project" />

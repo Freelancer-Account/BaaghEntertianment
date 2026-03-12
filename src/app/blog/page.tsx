@@ -31,14 +31,14 @@ export default async function Blog() {
     const posts = formattedDbPosts.length > 0 ? formattedDbPosts : staticPosts;
 
     return (
-        <div style={{ paddingTop: '100px', minHeight: '100vh', backgroundColor: 'var(--color-charcoal)' }}>
-            <section style={{ padding: '4rem 5%', textAlign: 'center' }}>
-                <h1 style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>Production Updates</h1>
-                <p style={{ color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '4rem' }}>Insights from the set</p>
+        <div className="page-container" style={{ backgroundColor: 'var(--color-charcoal)' }}>
+            <section className="page-section">
+                <h1 className="page-title">Production Updates</h1>
+                <p className="page-subtitle" style={{ marginBottom: '4rem' }}>Insights from the set</p>
 
                 <AdminAddButton isAdmin={isAdmin} href="/admin/blog/new" label="New Post" />
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem', maxWidth: '1200px', margin: '0 auto', textAlign: 'left' }}>
+                <div className="content-grid">
                     {posts.map((post: any) => (
                         <div key={post.id} style={{ backgroundColor: 'var(--color-black)', padding: '2.5rem', borderLeft: '4px solid var(--color-gold)', borderRadius: '4px', position: 'relative' }}>
                             <AdminItemControls isAdmin={isAdmin} id={post.id} type="post" />
