@@ -8,11 +8,16 @@ export const dynamic = 'force-dynamic';
 export default async function Blog() {
     const session = await auth();
     const isAdmin = (session?.user as any)?.role === 'ADMIN';
-    const dbPosts = await prisma.post.findMany({
-        where: { published: true },
-        orderBy: { createdAt: 'desc' },
-        select: { id: true, title: true, excerpt: true, createdAt: true }
-    });
+    let dbPosts: any[] = [];
+    try {
+        dbPosts = await prisma.post.findMany({
+            where: { published: true },
+            orderBy: { createdAt: 'desc' },
+            select: { id: true, title: true, excerpt: true, createdAt: true }
+        });
+    } catch (error) {
+        console.error('Failed to fetch posts from database:', error);
+    }
 
     const staticPosts = [
         { id: '1', title: 'How We Secured the Gateway of India for a 3-Day Shoot', date: 'Oct 15, 2026', excerpt: 'A behind-the-scenes look at the logistical challenges of shooting at one of India\'s most iconic monuments.' },

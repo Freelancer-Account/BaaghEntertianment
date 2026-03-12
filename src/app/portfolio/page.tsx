@@ -8,9 +8,14 @@ export const dynamic = 'force-dynamic';
 export default async function Portfolio() {
     const session = await auth();
     const isAdmin = (session?.user as any)?.role === 'ADMIN';
-    const dbProjects = await prisma.project.findMany({
-        orderBy: { createdAt: 'desc' }
-    });
+    let dbProjects: any[] = [];
+    try {
+        dbProjects = await prisma.project.findMany({
+            orderBy: { createdAt: 'desc' }
+        });
+    } catch (error) {
+        console.error('Failed to fetch projects from database:', error);
+    }
 
     const staticProjects = [
         { id: '1', title: 'The Tiger King', type: 'Feature Film', client: 'Netflix India', image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },

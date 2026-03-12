@@ -9,9 +9,14 @@ export default async function Services() {
     const session = await auth();
     const isAdmin = (session?.user as any)?.role === 'ADMIN';
 
-    const allServices = await prisma.service.findMany({
-        orderBy: { createdAt: 'asc' }
-    });
+    let allServices: any[] = [];
+    try {
+        allServices = await prisma.service.findMany({
+            orderBy: { createdAt: 'asc' }
+        });
+    } catch (error) {
+        console.error('Failed to fetch services from database:', error);
+    }
 
     return (
         <div className="page-container" style={{ backgroundColor: 'var(--color-charcoal)' }}>
