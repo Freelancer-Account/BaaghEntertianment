@@ -9,14 +9,43 @@ export default async function Services() {
     const session = await auth();
     const isAdmin = (session?.user as any)?.role === 'ADMIN';
 
-    let allServices: any[] = [];
+    let dbServices: any[] = [];
     try {
-        allServices = await prisma.service.findMany({
+        dbServices = await prisma.service.findMany({
             orderBy: { createdAt: 'asc' }
         });
     } catch (error) {
         console.error('Failed to fetch services from database:', error);
     }
+
+    const staticServices = [
+        {
+            id: '1',
+            title: 'Line Production',
+            desc: 'Complete end-to-end execution',
+            details: 'We handle everything from budgeting, scheduling, and crew hiring to equipment sourcing and daily operations. Our experienced line producers ensure your project runs on time and within budget, no matter the scale.'
+        },
+        {
+            id: '2',
+            title: 'Locations & Permissions',
+            desc: 'Access to exclusive locations across India',
+            details: 'Our extensive database and strong government relationships allow us to secure permits for even the most restricted locations. We handle all paperwork, local liaising, and logistical planning.'
+        },
+        {
+            id: '3',
+            title: 'Casting & Talent Management',
+            desc: 'Finding the perfect face for your vision',
+            details: 'From lead actors to thousands of junior artists, our casting directors have a keen eye for talent. We manage auditions, contracts, and on-set coordination for all performers.'
+        },
+        {
+            id: '4',
+            title: 'Equipment & Technical Logistics',
+            desc: 'State-of-the-art gear delivered on set',
+            details: 'We partner with premium rental houses to provide the latest cameras, lighting, and grip equipment. Our technical coordinators ensure all gear is tested and maintained properly.'
+        }
+    ];
+
+    const allServices = dbServices.length > 0 ? dbServices : staticServices;
 
     return (
         <div className="page-container" style={{ backgroundColor: 'var(--color-charcoal)' }}>
