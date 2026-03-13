@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { compareSync } from "bcrypt-ts";
+import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -18,11 +18,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 const user = await prisma.user.findUnique({
                     where: { email: credentials.email as string }
                 });
-                if (!user) return null;
+                
+                if (!user) {
+                    console.log('Login attempt failed: User not found for email', credentials.email);
+                    return null;
+                }
 
-                const isPasswordValid = compareSync(credentials.password as string, user.password);
-                if (!isPasswordValid) return null;
+                const isPasswordValid = bcrypt.compareSync(credentials.password as string, user.password);
+                
+                if (!isPasswordValid) {
+                    console.log('Login attempt failed: Invalid password for email', credentials.email);
+                    return null;
+                }
 
+                console.log('Login successful for user', user.email);
                 return { id: user.id, email: user.email, name: user.name, role: user.role };
             }
         })
