@@ -24,7 +24,7 @@ export default async function Portfolio() {
         { id: '4', title: 'Desert Storm', type: 'Feature Film', client: 'YRF', image: 'https://images.unsplash.com/photo-1518134346374-184f9d21cea2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
     ];
 
-    const projects = dbProjects.length > 0 ? dbProjects : staticProjects;
+    const projects = [...staticProjects, ...dbProjects];
 
     return (
         <div className="page-container" style={{ backgroundColor: 'var(--color-black)' }}>

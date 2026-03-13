@@ -45,7 +45,7 @@ export default async function Services() {
         }
     ];
 
-    const allServices = dbServices.length > 0 ? dbServices : staticServices;
+    const allServices = [...staticServices, ...dbServices];
 
     return (
         <div className="page-container" style={{ backgroundColor: 'var(--color-charcoal)' }}>

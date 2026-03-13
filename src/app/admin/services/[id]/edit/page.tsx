@@ -5,12 +5,14 @@ import { updateService } from '@/lib/adminActions';
 
 export const dynamic = 'force-dynamic';
 
-export default async function EditService({ params }: { params: { id: string } }) {
+export default async function EditService({ params }: { params: Promise<{ id: string }> }) {
     const session = await auth();
     if (!session || (session.user as any)?.role !== 'ADMIN') redirect('/login');
 
+    const { id } = await params;
+
     const service = await prisma.service.findUnique({
-        where: { id: params.id }
+        where: { id }
     });
 
     if (!service) redirect('/services');
@@ -20,7 +22,7 @@ export default async function EditService({ params }: { params: { id: string } }
         const title = formData.get('title') as string;
         const desc = formData.get('desc') as string;
         const details = formData.get('details') as string;
-        await updateService(params.id, { title, desc, details });
+        await updateService(id, { title, desc, details });
         redirect('/services');
     };
 

@@ -5,12 +5,14 @@ import { updatePost } from '@/lib/adminActions';
 
 export const dynamic = 'force-dynamic';
 
-export default async function EditPost({ params }: { params: { id: string } }) {
+export default async function EditPost({ params }: { params: Promise<{ id: string }> }) {
     const session = await auth();
     if (!session || (session.user as any)?.role !== 'ADMIN') redirect('/login');
 
+    const { id } = await params;
+
     const post = await prisma.post.findUnique({
-        where: { id: params.id }
+        where: { id }
     });
 
     if (!post) redirect('/blog');
@@ -21,7 +23,7 @@ export default async function EditPost({ params }: { params: { id: string } }) {
         const excerpt = formData.get('excerpt') as string;
         const content = formData.get('content') as string;
         const category = formData.get('category') as string;
-        await updatePost(params.id, { title, excerpt, content, category });
+        await updatePost(id, { title, excerpt, content, category });
         redirect('/blog');
     };
 

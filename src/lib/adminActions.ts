@@ -41,6 +41,13 @@ export async function deleteProject(id: string) {
     revalidatePath('/admin/portfolio');
 }
 
+export async function createProject(data: { title: string; client: string; type: string; servicesProvided: string; image: string }) {
+    await checkAdmin();
+    await prisma.project.create({ data });
+    revalidatePath('/portfolio');
+    revalidatePath('/admin/portfolio');
+}
+
 export async function updateProject(id: string, data: any) {
     await checkAdmin();
     await prisma.project.update({ where: { id }, data });

@@ -1,34 +1,162 @@
-import { prisma } from '@/lib/prisma';
-import { redirect } from 'next/navigation';
+'use client';
 
+import { useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function NewProject() {
-    async function createProject(formData: FormData) {
-        'use server';
-        const title = formData.get('title') as string;
-        const client = formData.get('client') as string;
-        const type = formData.get('type') as string;
-        const servicesProvided = formData.get('servicesProvided') as string;
-        const image = formData.get('image') as string || 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=800';
+    const [title, setTitle] = useState('');
+    const [client, setClient] = useState('');
+    const [type, setType] = useState('');
+    const [servicesProvided, setServicesProvided] = useState('');
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [dragActive, setDragActive] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const router = useRouter();
 
-        await prisma.project.create({
-            data: { title, client, type, servicesProvided, image }
-        });
+    const handleFileChange = (file: File) => {
+        if (!file.type.startsWith('image/')) return;
+        setImageFile(file);
+        const reader = new FileReader();
+        reader.onload = (e) => setImagePreview(e.target?.result as string);
+        reader.readAsDataURL(file);
+    };
 
-        redirect('/admin/portfolio');
-    }
+    const handleDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        setDragActive(false);
+        if (e.dataTransfer.files?.[0]) {
+            handleFileChange(e.dataTransfer.files[0]);
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        try {
+            let imageUrl = 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=800';
+
+            if (imageFile) {
+                const formData = new FormData();
+                formData.append('file', imageFile);
+                const uploadRes = await fetch('/api/upload', { method: 'POST', body: formData });
+                const uploadData = await uploadRes.json();
+                if (uploadData.url) imageUrl = uploadData.url;
+            }
+
+            const res = await fetch('/api/admin/portfolio', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, client, type, servicesProvided, image: imageUrl })
+            });
+
+            if (res.ok) {
+                router.push('/portfolio');
+                router.refresh();
+            }
+        } catch (error) {
+            console.error('Error creating project:', error);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const inputStyle = {
+        width: '100%',
+        padding: '15px',
+        backgroundColor: 'var(--color-black)',
+        border: '1px solid rgba(255,255,255,0.1)',
+        color: 'white',
+        borderRadius: '4px',
+        fontSize: '1rem'
+    };
 
     return (
-        <div>
-            <h1 style={{ fontSize: '2rem', marginBottom: '2rem' }}>Add Portfolio Project</h1>
-            <form action={createProject} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '800px' }}>
-                <input name="title" placeholder="Project Title" required style={{ padding: '15px', backgroundColor: 'var(--color-charcoal)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', borderRadius: '4px' }} />
-                <input name="client" placeholder="Client Name (e.g., Netflix)" required style={{ padding: '15px', backgroundColor: 'var(--color-charcoal)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', borderRadius: '4px' }} />
-                <input name="type" placeholder="Type (e.g., Feature Film, Web Series)" required style={{ padding: '15px', backgroundColor: 'var(--color-charcoal)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', borderRadius: '4px' }} />
-                <input name="servicesProvided" placeholder="Services Provided (Line Production, Locations...)" required style={{ padding: '15px', backgroundColor: 'var(--color-charcoal)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', borderRadius: '4px' }} />
-                <input name="image" placeholder="Image URL (Optional)" style={{ padding: '15px', backgroundColor: 'var(--color-charcoal)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', borderRadius: '4px' }} />
-                <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>Save Project</button>
-            </form>
+        <div style={{ paddingTop: '100px', minHeight: '100vh', backgroundColor: 'var(--color-black)' }}>
+            <div style={{ maxWidth: '600px', margin: '0 auto', padding: '2rem', backgroundColor: 'var(--color-charcoal)', borderRadius: '8px' }}>
+                <h1 style={{ fontSize: '2rem', marginBottom: '2rem' }}>Add Portfolio Project</h1>
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-gray-text)' }}>Project Title</label>
+                        <input value={title} onChange={(e) => setTitle(e.target.value)} required style={inputStyle} placeholder="Project Title" />
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-gray-text)' }}>Client Name</label>
+                        <input value={client} onChange={(e) => setClient(e.target.value)} required style={inputStyle} placeholder="Client Name (e.g., Netflix)" />
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-gray-text)' }}>Project Type</label>
+                        <input value={type} onChange={(e) => setType(e.target.value)} required style={inputStyle} placeholder="Type (e.g., Feature Film, Web Series)" />
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-gray-text)' }}>Services Provided</label>
+                        <input value={servicesProvided} onChange={(e) => setServicesProvided(e.target.value)} required style={inputStyle} placeholder="Services Provided (Line Production, Locations...)" />
+                    </div>
+
+                    {/* Image Upload Area */}
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-gray-text)' }}>Project Image</label>
+                        <div
+                            onClick={() => fileInputRef.current?.click()}
+                            onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
+                            onDragLeave={() => setDragActive(false)}
+                            onDrop={handleDrop}
+                            style={{
+                                border: `2px dashed ${dragActive ? 'var(--color-gold)' : 'rgba(255,255,255,0.15)'}`,
+                                borderRadius: '8px',
+                                padding: '2rem',
+                                textAlign: 'center',
+                                cursor: 'pointer',
+                                backgroundColor: dragActive ? 'rgba(218,165,32,0.05)' : 'var(--color-black)',
+                                transition: 'all 0.3s ease',
+                                position: 'relative',
+                                overflow: 'hidden',
+                            }}
+                        >
+                            {imagePreview ? (
+                                <div>
+                                    <img src={imagePreview} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px', objectFit: 'cover', borderRadius: '4px', marginBottom: '0.5rem' }} />
+                                    <p style={{ color: 'var(--color-gold)', fontSize: '0.85rem' }}>Click or drag to replace</p>
+                                </div>
+                            ) : (
+                                <div>
+                                    <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>📁</div>
+                                    <p style={{ color: 'var(--color-gray-text)', marginBottom: '0.3rem' }}>Drag & drop an image here</p>
+                                    <p style={{ color: 'var(--color-gold)', fontSize: '0.9rem' }}>or click to browse</p>
+                                </div>
+                            )}
+                            <input
+                                ref={fileInputRef}
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => e.target.files?.[0] && handleFileChange(e.target.files[0])}
+                                style={{ display: 'none' }}
+                            />
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        style={{
+                            padding: '1rem',
+                            backgroundColor: isSubmitting ? '#888' : 'var(--color-gold)',
+                            color: 'var(--color-black)',
+                            border: 'none',
+                            borderRadius: '4px',
+                            fontWeight: 'bold',
+                            cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                            marginTop: '1rem',
+                            fontSize: '1rem'
+                        }}
+                    >
+                        {isSubmitting ? 'Saving...' : 'Save Project'}
+                    </button>
+                    <a href="/portfolio" style={{ display: 'block', textAlign: 'center', color: 'var(--color-gray-text)', textDecoration: 'none' }}>Cancel</a>
+                </form>
+            </div>
         </div>
     );
 }
