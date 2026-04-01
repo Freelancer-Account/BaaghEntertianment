@@ -18,10 +18,7 @@ export default async function Portfolio() {
     }
 
     const staticProjects = [
-        { id: '1', title: 'The Tiger King', type: 'Feature Film', client: 'Netflix India', image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: '2', title: 'Mumbai Nights', type: 'Web Series', client: 'Amazon Prime', image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: '3', title: 'Royal Enfield X', type: 'Commercial', client: 'Ogilvy', image: 'https://images.unsplash.com/photo-1601506521937-0121a7fc2b6b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: '4', title: 'Desert Storm', type: 'Feature Film', client: 'YRF', image: 'https://images.unsplash.com/photo-1518134346374-184f9d21cea2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+        { id: '1', title: 'Panchayat', type: 'Web Series', client: 'Amazon Prime', image: '/images/gram_panchayat.png' },
     ];
 
     const projects = [...staticProjects, ...dbProjects];

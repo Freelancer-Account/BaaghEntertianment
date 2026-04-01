@@ -1,0 +1,11 @@
+{
+  "name": "baagh-entertainment",
+  "compatibility_date": "2024-04-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "baagh-entertainment"
+    }
+  ]
+}

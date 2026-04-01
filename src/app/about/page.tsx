@@ -22,6 +22,12 @@ export default function About() {
                 </div>
             </section>
 
+            <section className="page-section" style={{ paddingTop: '2rem' }}>
+                <div style={{ maxWidth: '1000px', margin: '0 auto', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
+                    <img src="/images/production_crew.png" alt="Baagh Entertainment Production Crew" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                </div>
+            </section>
+
             <section style={{ padding: '4rem 5%', backgroundColor: 'var(--color-charcoal)' }}>
                 <h2 className="page-title" style={{ textAlign: 'center', marginBottom: '3rem' }}>Our Mission & Vision</h2>
                 <div className="content-grid" style={{ maxWidth: '1000px', textAlign: 'left' }}>
