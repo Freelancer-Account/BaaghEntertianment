@@ -22,9 +22,46 @@ export default function About() {
                 </div>
             </section>
 
-            <section className="page-section" style={{ paddingTop: '2rem' }}>
-                <div style={{ maxWidth: '1000px', margin: '0 auto', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
-                    <img src="/images/production_crew.png" alt="Baagh Entertainment Production Crew" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            
+
+            {/* Founder Section */}
+            <section style={{ padding: '4rem 5%', backgroundColor: 'var(--color-black)' }}>
+                <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                    <h2 className="page-title" style={{ textAlign: 'center', marginBottom: '3rem' }}>Meet the Founder</h2>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem', alignItems: 'center' }} className="founder-section">
+                        <style>{`
+                            @media (min-width: 768px) {
+                                .founder-section {
+                                    flex-direction: row !important;
+                                    align-items: flex-start !important;
+                                }
+                            }
+                        `}</style>
+                        
+                        <div style={{ flex: '1', width: '100%', maxWidth: '400px' }}>
+                            <img 
+                                src="/images/founder.jpg" 
+                                alt="Founder of Baagh Entertainment" 
+                                style={{ 
+                                    width: '100%', 
+                                    height: 'auto', 
+                                    borderRadius: '8px', 
+                                    boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
+                                    border: '2px solid var(--color-gold)'
+                                }} 
+                            />
+                        </div>
+                        <div style={{ flex: '1', color: 'var(--color-gray-text)', lineHeight: '1.8', fontSize: '1.1rem' }}>
+                            <h3 style={{ color: 'var(--color-gold)', fontSize: '1.8rem', marginBottom: '1rem' }}>Our Founder</h3>
+                            <p style={{ marginBottom: '1.5rem' }}>
+                                As the driving force behind Baagh Entertainment, our founder brings years of cinematic expertise and a visionary approach to line production.
+                                With a deep understanding of the unique challenges filmmakers face, the goal has always been to create a robust support system that empowers creative minds.
+                            </p>
+                            <p>
+                                Through relentless dedication and a passion for storytelling, Baagh Entertainment has grown rapidly, providing unparalleled logistics and production support across India.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </section>
 

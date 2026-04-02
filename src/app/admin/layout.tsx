@@ -14,7 +14,7 @@ export default function AdminLayout({
 }) {
     return (
         <AuthProvider>
-            <div style={{ minHeight: '100vh', backgroundColor: 'var(--color-black)', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ paddingTop: '80px', minHeight: '100vh', backgroundColor: 'var(--color-black)', display: 'flex', flexDirection: 'column' }}>
                 <nav style={{ padding: '1rem 4%', backgroundColor: 'var(--color-charcoal)', borderBottom: '1px solid var(--color-gold)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
                     <h1 style={{ color: 'var(--color-gold)', fontSize: '1.1rem', margin: 0 }}>ADMIN DASHBOARD</h1>
                     <div className="admin-nav-links">

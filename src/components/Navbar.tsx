@@ -3,10 +3,12 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
+    const { data: session } = useSession();
 
     const handleLinkClick = () => {
         setIsOpen(false);
@@ -32,7 +34,24 @@ export default function Navbar() {
                 </div>
             </div>
 
-            <div className="nav-right-container">
+            <div className="nav-right-container" style={{ display: 'flex', alignItems: 'center' }}>
+                {session ? (
+                    <>
+                        {(session.user as any)?.role === 'ADMIN' && (
+                            <Link href="/admin/dashboard" className="btn-secondary" style={{ padding: '8px 24px', marginRight: '1rem', fontSize: '0.9rem', marginBottom: '0' }} onClick={handleLinkClick}>
+                                Dashboard
+                            </Link>
+                        )}
+                        <button onClick={() => signOut({ callbackUrl: '/' })} className="btn-secondary" style={{ padding: '8px 24px', marginRight: '1rem', fontSize: '0.9rem', marginBottom: '0' }}>
+                            Logout
+                        </button>
+                    </>
+                ) : (
+                    <Link href="/login" className="btn-secondary" style={{ padding: '8px 24px', marginRight: '1rem', fontSize: '0.9rem', marginBottom: '0' }} onClick={handleLinkClick}>
+                        Login
+                    </Link>
+                )}
+                
                 <button
                     className={`hamburger ${isOpen ? 'active' : ''}`}
                     onClick={() => setIsOpen(!isOpen)}

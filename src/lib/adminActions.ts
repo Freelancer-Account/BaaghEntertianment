@@ -19,14 +19,14 @@ export async function deleteService(id: string) {
     revalidatePath('/admin/services');
 }
 
-export async function createService(data: { title: string; desc: string; details: string }) {
+export async function createService(data: { title: string; desc: string; details: string; image?: string }) {
     await checkAdmin();
     await prisma.service.create({ data });
     revalidatePath('/services');
     revalidatePath('/admin/services');
 }
 
-export async function updateService(id: string, data: { title: string; desc: string; details: string }) {
+export async function updateService(id: string, data: { title: string; desc: string; details: string; image?: string }) {
     await checkAdmin();
     await prisma.service.update({ where: { id }, data });
     revalidatePath('/services');

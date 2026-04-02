@@ -2,14 +2,15 @@
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { createService } from '@/lib/adminActions';
+import { updateService } from '@/lib/adminActions';
 
-export default function NewService() {
-    const [title, setTitle] = useState('');
-    const [desc, setDesc] = useState('');
-    const [details, setDetails] = useState('');
+export default function EditServiceClient({ service }: { service: any }) {
+    const [title, setTitle] = useState(service.title);
+    const [desc, setDesc] = useState(service.desc);
+    const [details, setDetails] = useState(service.details);
     const [imageFile, setImageFile] = useState<File | null>(null);
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(service.image || null);
+    const [existingImage, setExistingImage] = useState(service.image || '');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [dragActive, setDragActive] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -36,7 +37,7 @@ export default function NewService() {
         setIsSubmitting(true);
 
         try {
-            let imageUrl = undefined; // Will fallback to default if undefined
+            let imageUrl = existingImage;
 
             if (imageFile) {
                 const formData = new FormData();
@@ -46,12 +47,13 @@ export default function NewService() {
                 if (uploadData.url) imageUrl = uploadData.url;
             }
 
-            await createService({ title, desc, details, image: imageUrl });
+            // Using the server action from adminActions.ts
+            await updateService(service.id, { title, desc, details, image: imageUrl });
             
             router.push('/services');
             router.refresh();
         } catch (error) {
-            console.error('Error creating service:', error);
+            console.error('Error updating service:', error);
         } finally {
             setIsSubmitting(false);
         }
@@ -70,19 +72,19 @@ export default function NewService() {
     return (
         <div style={{ paddingTop: '100px', minHeight: '100vh', backgroundColor: 'var(--color-black)' }}>
             <div style={{ maxWidth: '600px', margin: '0 auto', padding: '2rem', backgroundColor: 'var(--color-charcoal)', borderRadius: '8px' }}>
-                <h1 style={{ fontSize: '2rem', marginBottom: '2rem' }}>Add New Service</h1>
+                <h1 style={{ fontSize: '2rem', marginBottom: '2rem' }}>Edit Service</h1>
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div>
                         <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-gray-text)' }}>Title</label>
-                        <input value={title} onChange={(e) => setTitle(e.target.value)} required style={inputStyle} placeholder="Service Title" />
+                        <input value={title} onChange={(e) => setTitle(e.target.value)} required style={inputStyle} />
                     </div>
                     <div>
                         <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-gray-text)' }}>Short Description</label>
-                        <input value={desc} onChange={(e) => setDesc(e.target.value)} required style={inputStyle} placeholder="Short Description" />
+                        <input value={desc} onChange={(e) => setDesc(e.target.value)} required style={inputStyle} />
                     </div>
                     <div>
                         <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-gray-text)' }}>Detailed Description</label>
-                        <textarea value={details} onChange={(e) => setDetails(e.target.value)} required rows={5} style={{ ...inputStyle, fontFamily: 'inherit' }} placeholder="Provide detailed information about the service..."></textarea>
+                        <textarea value={details} onChange={(e) => setDetails(e.target.value)} required rows={5} style={{ ...inputStyle, fontFamily: 'inherit' }}></textarea>
                     </div>
 
                     {/* Image Upload Area */}
@@ -142,7 +144,7 @@ export default function NewService() {
                             fontSize: '1rem'
                         }}
                     >
-                        {isSubmitting ? 'Saving...' : 'Create Service'}
+                        {isSubmitting ? 'Updating...' : 'Update Service'}
                     </button>
                     <a href="/services" style={{ display: 'block', textAlign: 'center', color: 'var(--color-gray-text)', textDecoration: 'none' }}>Cancel</a>
                 </form>

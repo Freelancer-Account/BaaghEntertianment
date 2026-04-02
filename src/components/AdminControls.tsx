@@ -10,14 +10,16 @@ export function AdminAddButton({ isAdmin, href, label }: { isAdmin: boolean; hre
         <div style={{ textAlign: 'right', marginBottom: '2rem', maxWidth: '1200px', margin: '0 auto 2rem auto' }}>
             <a href={href} style={{
                 display: 'inline-block',
-                backgroundColor: 'var(--color-gold)',
-                color: 'var(--color-black)',
-                padding: '10px 20px',
+                backgroundColor: 'var(--color-accent)',
+                color: 'var(--color-white)',
+                padding: '12px 28px',
                 borderRadius: '4px',
                 fontWeight: 'bold',
                 textDecoration: 'none',
                 textTransform: 'uppercase',
-                fontSize: '0.9rem'
+                fontSize: '1rem',
+                border: '1px solid var(--color-accent)',
+                transition: 'all 0.3s ease',
             }}>
                 + {label}
             </a>
@@ -28,15 +30,17 @@ export function AdminAddButton({ isAdmin, href, label }: { isAdmin: boolean; hre
 export function AdminItemControls({
     isAdmin,
     id,
-    type
+    type,
+    isStatic = false
 }: {
     isAdmin: boolean;
     id: string;
-    type: 'service' | 'project' | 'post'
+    type: 'service' | 'project' | 'post';
+    isStatic?: boolean;
 }) {
     const router = useRouter();
 
-    if (!isAdmin) return null;
+    if (!isAdmin || isStatic) return null;
 
     const routeMap: Record<string, string> = {
         service: 'services',

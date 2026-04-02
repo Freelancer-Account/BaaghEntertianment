@@ -24,28 +24,32 @@ export default async function Services() {
             title: 'Line Production',
             desc: 'Complete end-to-end execution',
             details: 'We handle everything from budgeting, scheduling, and crew hiring to equipment sourcing and daily operations. Our experienced line producers ensure your project runs on time and within budget, no matter the scale.',
-            image: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?q=80&w=1456&auto=format&fit=crop'
+            image: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?q=80&w=1456&auto=format&fit=crop',
+            isStatic: true
         },
         {
             id: '2',
             title: 'Locations & Permits',
             desc: 'Access to exclusive locations across India',
             details: 'Our extensive database and strong government relationships allow us to secure permits for even the most restricted locations. We handle all paperwork, local liaising, and logistical planning.',
-            image: 'https://images.unsplash.com/photo-1533502931221-a3f2d019f635?q=80&w=1471&auto=format&fit=crop'
+            image: 'https://images.unsplash.com/photo-1533502931221-a3f2d019f635?q=80&w=1471&auto=format&fit=crop',
+            isStatic: true
         },
         {
             id: '3',
             title: 'Casting & Talent Management',
             desc: 'Finding the perfect face for your vision',
             details: 'From lead actors to thousands of junior artists, our casting directors have a keen eye for talent. We manage auditions, contracts, and on-set coordination for all performers.',
-            image: 'https://images.unsplash.com/photo-1563223771-46bb6f2a8def?q=80&w=1500&auto=format&fit=crop'
+            image: 'https://images.unsplash.com/photo-1563223771-46bb6f2a8def?q=80&w=1500&auto=format&fit=crop',
+            isStatic: true
         },
         {
             id: '4',
             title: 'Camera & Equipment',
             desc: 'State-of-the-art gear delivered on set',
             details: 'We partner with premium rental houses to provide the latest cameras, lighting, and grip equipment. Our technical coordinators ensure all gear is tested and maintained properly.',
-            image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1400&auto=format&fit=crop'
+            image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1400&auto=format&fit=crop',
+            isStatic: true
         }
     ];
 
@@ -67,7 +71,7 @@ export default async function Services() {
                         <div key={srv.id} className="image-card" style={{ minHeight: '450px', aspectRatio: 'auto' }}>
                             <img src={bgImage} alt={srv.title} />
                             <div className="image-card-overlay">
-                                <AdminItemControls isAdmin={isAdmin} id={srv.id} type="service" />
+                                <AdminItemControls isAdmin={isAdmin} id={srv.id} type="service" isStatic={srv.isStatic} />
                                 <h2 className="image-card-title" style={{ fontSize: '2.5rem' }}>{srv.title}</h2>
                                 <p className="image-card-desc">
                                     <span style={{ color: 'var(--color-accent)', display: 'block', marginBottom: '8px', fontWeight: 600 }}>{srv.desc}</span>
